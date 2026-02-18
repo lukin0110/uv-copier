@@ -16,12 +16,12 @@ python = ">={{ python_version }},<4.0"{% if use_app %}
 poethepoet = ">=0.29.0"{% endif %}{% if use_django %}
 Django = ">=5.0.2"
 gunicorn = ">=23.0.0"{% elif use_fastapi %}
-fastapi = { extras = ["all"], version = ">=0.115.4" }
-uvicorn = { extras = ["standard"], version = ">=0.32.0" }
-uvloop = ">=0.21.0"{% elif use_gradio %}
+fastapi = { extras = ["all"], version = ">=0.129.0" }
+uvicorn = { extras = ["standard"], version = ">=0.41.0" }
+uvloop = ">=0.22.1"{% elif use_gradio %}
 gradio = ">=4.19.1"{% elif use_streamlit %}
 streamlit = ">=1.31.1"{% endif %}{% if use_pydantic %}
-pydantic = ">=2.9.2"{% endif %}
+pydantic = ">=2.12.5"{% endif %}
 
 [tool.poetry.group.dev.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 coverage = { extras = ["toml"], version = ">=7.4.1" }
