@@ -17,18 +17,17 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "astral-sh.ty",
         "charliermarsh.ruff",
         "eamodio.gitlens",
-        "github.copilot",{% if ci =='github' %}
+        "GitHub.copilot-chat",{% if ci =='github' %}
         "GitHub.vscode-github-actions",
         "GitHub.vscode-pull-request-github",{% elif ci == 'gitlab' %}
         "GitLab.gitlab-workflow",{% endif %}
         "ms-azuretools.vscode-docker",
-        "ms-python.mypy-type-checker",
         "ms-python.python",
         "ryanluker.vscode-coverage-gutters",
-        "tamasfe.even-better-toml",
-        "visualstudioexptteam.vscodeintellicode"
+        "tamasfe.even-better-toml"
       ],
       "settings": {
         "coverage-gutters.coverageFileNames": [
@@ -52,8 +51,6 @@
         "[toml]": {
           "editor.formatOnSave": false
         },
-        "mypy-type-checker.importStrategy": "fromEnvironment",
-        "mypy-type-checker.preferDaemon": true,
         "python.defaultInterpreterPath": "/opt/{{ package_slug }}-env/bin/python",
         "python.terminal.activateEnvironment": false,
         "python.testing.pytestEnabled": true,

@@ -26,7 +26,7 @@ pydantic = ">=2.12.5"{% endif %}
 [tool.poetry.group.dev.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 coverage = { extras = ["toml"], version = ">=7.4.1" }
 ipython = ">=8.29.0"
-mypy = "1.13.0"{% if not use_app %}
+ty = ">=0.0.18"{% if not use_app %}
 poethepoet = ">=0.29.0"{% endif %}
 pre-commit = ">=4.0.1"
 pytest = ">=8.3.3"
@@ -63,26 +63,15 @@ source = ["src"]
 [tool.coverage.xml]  # https://coverage.readthedocs.io/en/latest/config.html#xml
 output = "reports/coverage.xml"
 
-[tool.mypy]  # https://mypy.readthedocs.io/en/latest/config_file.html
-junit_xml = "reports/mypy.xml"{% if use_pydantic %}
-plugins = "pydantic.mypy"{% endif %}
-strict = true
-disallow_subclassing_any = false
-disallow_untyped_decorators = false
-explicit_package_bases = true
-ignore_missing_imports = true
-pretty = true
-show_column_numbers = true
-show_error_codes = true
-show_error_context = true
-warn_unreachable = true
-mypy_path = "src"{% if use_pydantic %}
+[tool.ty.environment]  # https://docs.astral.sh/ty/configuration/
+python-version = "3.13"
+root = ["./src"]
 
-[tool.pydantic-mypy]  # https://pydantic-docs.helpmanual.io/mypy_plugin/#configuring-the-plugin
-init_forbid_extra = true
-init_typed = true
-warn_required_dynamic_aliases = true
-warn_untyped_fields = true{% endif %}
+[tool.ty.terminal]
+output-format = "github"
+
+[tool.ty.rules]
+unused-ignore-comment = "warn"
 
 [tool.pytest.ini_options]  # https://docs.pytest.org/en/latest/reference/reference.html#ini-options-ref
 addopts = "--color=yes --doctest-modules --exitfirst --failed-first --strict-config --strict-markers --typeguard-packages={{ package_slug }} --verbosity=2 --junitxml=reports/pytest.xml"

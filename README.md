@@ -25,7 +25,7 @@ Check out the following demos for examples of scaffolded projects using this tem
 - 📦 Dependency management with [Poetry](https://python-poetry.org/)
 - 🏃 Task running with [Poe the Poet](https://poethepoet.natn.io/index.html)
 - ✍️ Code formatting with [Ruff](https://docs.astral.sh/ruff/)
-- ✅ Code linting with [Pre-commit](https://pre-commit.com/), [Mypy](), and [Ruff](https://docs.astral.sh/ruff/)
+- ✅ Code linting with [Pre-commit](https://pre-commit.com/), [Ty](https://docs.astral.sh/ty/), and [Ruff](https://docs.astral.sh/ruff/)
 - 🧪 Test coverage with [Coverage.py](https://coverage.readthedocs.io/en/7.3.2/) and [Pytest](https://docs.pytest.org/en/7.4.x/)
 - ♻️ Continuous integration with [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI/CD](https://docs.gitlab.com/ee/ci/)
 - 🧰 Dependency updates with [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates) (only with GitHub Actions)

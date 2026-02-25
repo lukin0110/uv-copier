@@ -87,16 +87,15 @@ def assert_devcontainer(path: Path, /, github: bool = False, gitlab: bool = Fals
                 "customizations": {
                     "vscode": {
                         "extensions": [
+                            "astral-sh.ty",
                             "charliermarsh.ruff",
                             "eamodio.gitlens",
-                            "github.copilot",
+                            "GitHub.copilot-chat",
                             *extensions,
                             "ms-azuretools.vscode-docker",
-                            "ms-python.mypy-type-checker",
                             "ms-python.python",
                             "ryanluker.vscode-coverage-gutters",
                             "tamasfe.even-better-toml",
-                            "visualstudioexptteam.vscodeintellicode",
                         ],
                         "settings": {
                             "coverage-gutters.coverageFileNames": ["reports/coverage.xml"],
@@ -112,8 +111,6 @@ def assert_devcontainer(path: Path, /, github: bool = False, gitlab: bool = Fals
                             "files.autoSave": "onFocusChange",
                             "[python]": {"editor.defaultFormatter": "charliermarsh.ruff"},
                             "[toml]": {"editor.formatOnSave": False},
-                            "mypy-type-checker.importStrategy": "fromEnvironment",
-                            "mypy-type-checker.preferDaemon": True,
                             "python.defaultInterpreterPath": "/opt/mcfly-env/bin/python",
                             "python.terminal.activateEnvironment": False,
                             "python.testing.pytestEnabled": True,
