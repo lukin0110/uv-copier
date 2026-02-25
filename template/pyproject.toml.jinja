@@ -24,7 +24,7 @@ streamlit = ">=1.31.1"{% endif %}{% if use_pydantic %}
 pydantic = ">=2.12.5"{% endif %}
 
 [tool.poetry.group.dev.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
-coverage = { extras = ["toml"], version = ">=7.13.4" }
+coverage = { extras = ["toml"], version = ">=7.13.4,<8.0.0" }
 ipython = ">=8.29.0"
 ty = ">=0.0.18"{% if not use_app %}
 poethepoet = ">=0.29.0"{% endif %}
