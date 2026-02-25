@@ -9,6 +9,12 @@ Scaffold locally:
 copier copy --vcs-ref HEAD ../poetry-copier .
 ```
 
+## Run tests
+```
+cd testing
+poetry run pytest
+```
+
 ## Useful reads
 
 - [Speeding up Ubuntu Docker builds with podman](https://www.declarativesystems.com/2020/02/27/speeding-up-ubuntu-docker-builds-with-podman.html)

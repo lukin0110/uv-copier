@@ -13,8 +13,7 @@
                 "GitHub.vscode-github-actions",
                 "GitHub.vscode-pull-request-github",
                 "ms-python.python",
-                "tamasfe.even-better-toml",
-                "visualstudioexptteam.vscodeintellicode"
+                "tamasfe.even-better-toml"
             ],
             "settings": {
                 "dev.containers.copyGitConfig": true,
