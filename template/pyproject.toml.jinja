@@ -24,18 +24,18 @@ streamlit = ">=1.31.1"{% endif %}{% if use_pydantic %}
 pydantic = ">=2.12.5"{% endif %}
 
 [tool.poetry.group.dev.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
-coverage = { extras = ["toml"], version = ">=7.4.1" }
+coverage = { extras = ["toml"], version = ">=7.13.4" }
 ipython = ">=8.29.0"
 ty = ">=0.0.18"{% if not use_app %}
 poethepoet = ">=0.29.0"{% endif %}
-pre-commit = ">=4.0.1"
-pytest = ">=8.3.3"
+pre-commit = ">=4.5.1"
+pytest = ">=8.4.2"
 pytest-clarity = ">=1.0.1"
-pytest-mock = ">=3.14.0"
-ruff = ">=0.8.4"
+pytest-mock = ">=3.15.1"
+ruff = ">=0.15.2"
 safety = ">=2.3.5,!=2.3.5"
-shellcheck-py = ">=0.10.0"
-typeguard = ">=4.4.1"
+shellcheck-py = ">=0.11.0.1"
+typeguard = ">=4.5.1"
 
 [[tool.poetry.source]]  # https://python-poetry.org/docs/repositories/
 name = "pypi"
