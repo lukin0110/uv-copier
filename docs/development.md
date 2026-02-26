@@ -12,7 +12,7 @@ copier copy --vcs-ref HEAD ../poetry-copier .
 ## Run tests
 ```
 cd testing
-poetry run pytest
+uv run -m pytest
 ```
 
 ## Useful reads
