@@ -143,7 +143,7 @@ private_publish_repository_url:
 python_version:
     type: str
     help: What Python version do you want to use?
-    default: "3.13.0"
+    default: "3.14.3"
     when: false
 
 poetry_version:

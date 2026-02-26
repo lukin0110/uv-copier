@@ -3,7 +3,7 @@
 import pytest
 
 
-@pytest.fixture()
+@pytest.fixture
 def answers() -> dict[str, str | bool]:
     """Provide answers to generate a python package."""
     return {
@@ -13,7 +13,7 @@ def answers() -> dict[str, str | bool]:
         "use_pydantic": True,
         "use_makefile": False,
         "use_private_package_repository": False,
-        "python_version": "3.13.0",
+        "python_version": "3.14.3",
         "package_slug": "mcfly",
         "use_app": False,
         "use_fastapi": False,
@@ -22,7 +22,7 @@ def answers() -> dict[str, str | bool]:
     }
 
 
-@pytest.fixture()
+@pytest.fixture
 def expected_paths(package_slug: str = "mcfly") -> set[str]:
     """Provide a minimal set of required paths."""
     return {
