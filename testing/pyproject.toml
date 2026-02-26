@@ -1,17 +1,21 @@
-[tool.poetry]
-name = "poetry copier tests"
+[project]
+# Run pytest: uv run -m pytest
+# Run ty: uv run ty check
+name = "poetry-copier-tests"
 version = "0.0.1"
 description = "A test suite for the poetry copier template"
 authors = ["Maarten Huijsmans <maarten.huijsmans@gmail.com>"]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-copier = ">=9.2.0"
-pytest = ">=8.1.1"
-python = "^3.12"
-ruff = ">=0.4.1"
-deepdiff = "^7.0.1"
-pyyaml = "^6.0.1"
+requires-python = ">=3.13,<3.15"
+dependencies = [
+    "copier>=9.2.0",
+    "deepdiff>=8.6.1",
+    "pre-commit>=4.1.0",
+    "pytest>=8.1.1",
+    "pyyaml>=6.0.3",
+    "ruff>=0.15.2",
+    "ty>=0.0.19",
+]
 
 [tool.ruff]  # https://github.com/charliermarsh/ruff
 fix = true
@@ -33,7 +37,3 @@ testpaths = ["tests"]
 xfail_strict = true
 log_cli = true
 log_file_level = "info"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"

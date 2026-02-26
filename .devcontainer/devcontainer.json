@@ -4,12 +4,18 @@
         "context": "..",
         "dockerfile": "Dockerfile"
     },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "username": "vscode"
+        }
+    },
     "remoteUser": "vscode",
     "customizations": {
         "vscode": {
             "extensions": [
+                "astral-sh.ty",
                 "charliermarsh.ruff",
-                "github.copilot",
+                "GitHub.copilot-chat",
                 "GitHub.vscode-github-actions",
                 "GitHub.vscode-pull-request-github",
                 "ms-python.python",
