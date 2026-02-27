@@ -5,11 +5,7 @@ services:
       context: .
       args:
         PYTHON_VERSION: ${PYTHON_VERSION:-{{ python_version }}}
-      target: dev{% if use_private_package_repository %}
-      secrets:
-        - poetry-auth
-    secrets:
-      - poetry-auth{% endif %}
+      target: dev
     stdin_open: true
     tty: true
     volumes:
@@ -19,21 +15,14 @@ services:
   app:
     build:
       context: .
-      target: app{% if use_private_package_repository %}
-      secrets:
-        - poetry-auth{% endif %}
+      target: app
     tty: true
     ports:
       - "8001:8000"
     volumes:
       - .:/workspaces/{{ package_slug }}/
     command: ["serve", "--dev"]
-{% endif %}{% if use_private_package_repository %}
-secrets:
-  poetry-auth:
-    # See README.md to configure auth.toml
-    file: "${POETRY_AUTH_TOML_PATH:-~/.config/pypoetry/auth.toml}"
- {% endif %}
+{% endif %}
 networks:
   default:
     name: {{ package_slug }}-network

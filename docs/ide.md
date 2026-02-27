@@ -16,9 +16,9 @@ docker compose run devcontainer poe lint
 docker compose run devcontainer poe test
 ```
 
-#### Update poetry lock file
+#### Update uv lock file
 ```bash
-docker compose run devcontainer poetry lock --no-update
+docker compose run devcontainer uv lock
 ```
 
 Update the docker image with the new lock file:
@@ -51,7 +51,7 @@ make lint
 make test
 ```
 
-#### Update poetry lock file
+#### Update uv lock file
 ```bash
 make lock
 ```

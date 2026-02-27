@@ -1,51 +1,44 @@
-[tool.poetry]  # https://python-poetry.org/docs/pyproject/
+[project]  # https://packaging.python.org/en/latest/specifications/pyproject-toml/
 name = "{{ package_slug }}"
 version = "0.0.0"
 description = "{{ description }}"
 authors = []
-license = "Proprietary"
 readme = "README.md"
-{% if repository_url %}repository = "{{ repository_url }}"{% endif %}
+requires-python = ">={{ python_version }},<4.0"
+dependencies = [
+    {% if use_app %}"poethepoet (>=0.29.0)",{% endif %}{% if use_django %}
+    "Django (>=5.0.2)",
+    "gunicorn (>=23.0.0)",{% elif use_fastapi %}
+    "fastapi[all] (>=0.129.0)",
+    "uvicorn[standard] (>=0.41.0)",
+    "uvloop (>=0.22.1)",{% elif use_gradio %}
+    "gradio (>=4.19.1)",{% elif use_streamlit %}
+    "streamlit (>=1.31.1)",{% endif %}{% if use_pydantic %}
+    "pydantic (>=2.12.5)",{% endif %}
+]
 
-[build-system]  # https://python-poetry.org/docs/pyproject/#poetry-and-pep-517
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[project.urls]
+{% if repository_url %}homepage = "{{ repository_url }}"
+source = "{{ repository_url }}"{% endif %}
 
-[tool.poetry.dependencies]  # https://python-poetry.org/docs/dependency-specification/
-python = ">={{ python_version }},<4.0"{% if use_app %}
-poethepoet = ">=0.29.0"{% endif %}{% if use_django %}
-Django = ">=5.0.2"
-gunicorn = ">=23.0.0"{% elif use_fastapi %}
-fastapi = { extras = ["all"], version = ">=0.129.0" }
-uvicorn = { extras = ["standard"], version = ">=0.41.0" }
-uvloop = ">=0.22.1"{% elif use_gradio %}
-gradio = ">=4.19.1"{% elif use_streamlit %}
-streamlit = ">=1.31.1"{% endif %}{% if use_pydantic %}
-pydantic = ">=2.12.5"{% endif %}
+[build-system]  # https://docs.astral.sh/uv/concepts/build-backend/
+requires = ["uv_build>=0.10.7,<0.11.0"]
+build-backend = "uv_build"
 
-[tool.poetry.group.dev.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
-coverage = { extras = ["toml"], version = ">=7.13.4,<8.0.0" }
-ipython = ">=8.29.0"
-ty = ">=0.0.19"{% if not use_app %}
-poethepoet = ">=0.29.0"{% endif %}
-pre-commit = ">=4.5.1"
-pytest = ">=8.4.2"
-pytest-clarity = ">=1.0.1"
-pytest-mock = ">=3.15.1"
-ruff = ">=0.15.2"
-safety = ">=2.3.5,!=2.3.5"
-shellcheck-py = ">=0.11.0.1"
-typeguard = ">=4.5.1"
-
-[[tool.poetry.source]]  # https://python-poetry.org/docs/repositories/
-name = "pypi"
-priority = "primary"{% if use_private_package_repository %}
-
-[[tool.poetry.source]]  # https://python-poetry.org/docs/repositories/#private-repository-example
-# Configura a private package: my_private_package = { version = ">=0.0.0", source="{{ private_package_repository_name }}" }
-name = "{{ private_package_repository_name }}"
-url = "{{ private_package_repository_url }}"
-priority = "explicit"{% endif %}
+[dependency-groups]
+dev = [
+    "coverage[toml] (>=7.13.4,<8.0.0)",
+    "ipython (>=8.29.0)",
+    "ty (>=0.0.19)",{% if not use_app %}
+    "poethepoet (>=0.29.0)",{% endif %}
+    "pre-commit (>=4.5.1)",
+    "pytest (>=8.4.2)",
+    "pytest-clarity (>=1.0.1)",
+    "pytest-mock (>=3.15.1)",
+    "ruff (>=0.15.2)",
+    "safety (>=3.7.0,<4.0.0)",
+    "typeguard (>=4.5.1)",
+]
 
 [tool.coverage.report]  # https://coverage.readthedocs.io/en/latest/config.html#report
 # TODO: please raise the bar :)
@@ -132,7 +125,7 @@ convention = "numpy"
 
     [tool.poe.tasks.safety]
     help = "Run safety checks on this package"
-    shell = "safety check --continue-on-error --full-report"
+    shell = "safety scan --continue-on-error --full-report"
 
 
     [tool.poe.tasks.test]

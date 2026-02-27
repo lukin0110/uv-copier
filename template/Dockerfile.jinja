@@ -10,10 +10,10 @@ LABEL org.opencontainers.image.description="{{ description }}"
 ENV PYTHONFAULTHANDLER=1
 ENV PYTHONUNBUFFERED=1
 
-# Install Poetry.
-ENV POETRY_VERSION={{ poetry_version }}
+# Install uv.
+ENV UV_VERSION={{ uv_version }}
 RUN --mount=type=cache,target=/root/.cache/pip/ \
-    pip install poetry==$POETRY_VERSION
+    pip install uv==$UV_VERSION
 
 # Install curl & compilers that may be required for certain packages or platforms.
 # The stock ubuntu image cleans up /var/cache/apt automatically. This makes the build process slow.
@@ -24,16 +24,17 @@ RUN --mount=type=cache,target=/var/cache/apt/ \
     apt-get update && apt-get install --no-install-recommends --yes curl build-essential
 
 # Create and activate a virtual environment.
+# https://docs.astral.sh/uv/concepts/projects/config/#project-environment-path
 RUN python -m venv /opt/{{ package_slug }}-env
 ENV PATH=/opt/{{ package_slug }}-env/bin:$PATH
 ENV VIRTUAL_ENV=/opt/{{ package_slug }}-env
+ENV UV_PROJECT_ENVIRONMENT=$VIRTUAL_ENV
 
 # Set the working directory.
 WORKDIR /workspaces/{{ package_slug }}/
 
-# Touch minimal files to allow Poetry to install dependencies.
-RUN mkdir -p /root/.cache/pypoetry/ && mkdir -p /root/.config/pypoetry/ && \
-    mkdir -p src/{{ package_slug }}/ && touch src/{{ package_slug }}/__init__.py && touch README.md
+# Touch minimal files to allow uv to install dependencies.
+RUN mkdir -p /root/.cache/uv && mkdir -p src/{{ package_slug }}/ && touch src/{{ package_slug }}/__init__.py && touch README.md
 
 
 
@@ -57,10 +58,9 @@ RUN --mount=type=cache,target=/var/cache/apt/ \
     git config --system --add safe.directory '*'
 
 # Install the run time Python dependencies in the virtual environment.
-COPY poetry.lock* pyproject.toml /workspaces/{{ package_slug }}/
-RUN --mount=type=cache,target=/root/.cache/pypoetry/ \{% if use_private_package_repository %}
-    --mount=type=secret,id=poetry-auth,target=/root/.config/pypoetry/auth.toml,ro \{% endif %}
-    poetry install --no-interaction --no-ansi
+COPY uv.lock* pyproject.toml /workspaces/{{ package_slug }}/
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --all-extras --frozen --compile-bytecode --link-mode copy --python-preference only-system
 
 # Install pre-commit hooks & activate starship.
 COPY .pre-commit-config.yaml /workspaces/{{ package_slug }}/
@@ -69,20 +69,16 @@ RUN git init && pre-commit install --install-hooks && \
     echo 'poe --help' >> ~/.zshrc && \
     zsh -c 'source ~/.zshrc'
 
-{% if use_private_package_repository %}# Enable Poetry to read the private package repository credentials.
-RUN ln -s /run/secrets/poetry-auth /root/.config/pypoetry/auth.toml
-
-{% endif %}CMD ["zsh"]
+CMD ["zsh"]
 
 
 
 {% if use_app %}FROM base AS app
 
 # Install the run time Python dependencies in the virtual environment.
-COPY poetry.lock* pyproject.toml /workspaces/{{ package_slug }}/
-RUN --mount=type=cache,target=/root/.cache/pypoetry/ \{% if use_private_package_repository %}
-    --mount=type=secret,id=poetry-auth,target=/root/.config/pypoetry/auth.toml,ro \{% endif %}
-    poetry install --only main --no-interaction --no-ansi
+COPY uv.lock* pyproject.toml /workspaces/{{ package_slug }}/
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --all-extras --frozen --compile-bytecode --link-mode copy --no-dev --no-editable --python-preference only-system
 
 # Copy the package source code.
 COPY . .

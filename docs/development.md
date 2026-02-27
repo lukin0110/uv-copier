@@ -24,17 +24,17 @@ uv run -m pytest
 
 ## Development without Docker
 
-The template aims to strike a balance between Docker-based and non-Docker-based development. To utilize Poetry without Docker, follow these steps:
+The template aims to strike a balance between Docker-based and non-Docker-based development. To utilize uv without Docker, follow these steps:
 
 1. Install [pyenv](https://github.com/pyenv/pyenv?tab=readme-ov-file#installation)
 2. Activate pyenv: 
 ```bash 
 pyenv shell 3.14.3
 ```
-3. Install Poetry: 
+3. Install uv: 
 ```bash 
-pip install poetry
-poetry install
+pip install uv
+uv sync
 ```
 3. Install pre-commit:
 ```bash

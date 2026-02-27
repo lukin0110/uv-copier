@@ -10,9 +10,9 @@ _message_after_copy: |
 
        $ git init
 
-    2. Generate a poetry.lock file:
+    2. Generate a uv.lock file:
 
-       $ make lock
+       $ uv lock
 
     3. Read README.md and start coding.
 
@@ -81,61 +81,6 @@ repository_url:
         Repository URL is required.
         {% endif %}
 
-# 1.2.1 Configure private package repository
-use_private_package_repository:
-    type: bool
-    help: Use a private package repository to download proprietary packages (y/N)?
-    default: no
-
-private_package_repository_name:
-    type: str
-    help: What is the name of the private package repository?
-    default: "private_pypi"
-    when: "{{ use_private_package_repository }}"
-    validator: "{% if not (private_package_repository_name | regex_search('^[a-zA-Z_]+$')) %}Invalid repository name{% endif %}"
-
-private_package_repository_url:
-    type: str
-    help: What is the URL of the private gitlab package repository?
-    default: "{% if ci == 'gitlab' %}https://gitlab.com/api/v4/projects/<project_id>/packages/pypi/simple{% else %}https://<private-pypi-url>/simple{% endif %}"
-    when: "{{ use_private_package_repository }}"
-    validator: >-
-        {% if use_private_package_repository %}
-            {% if ci == 'gitlab' and not (private_package_repository_url | regex_search('https://gitlab.com/api/v4/projects/[0-9]+/packages/pypi/simple')) %}
-            Invalid GitLab URL for private package repository, example: https://gitlab.com/api/v4/projects/1234/packages/pypi/simple
-            {% elif not private_package_repository_url | regex_search('^https:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$') %}
-            Invalid URL for private package repository, example: https://private-pypi.org/simple
-            {% elif not private_package_repository_url %}
-            Private repository URL is required.
-            {% endif %}
-        {% endif %}
-
-# 1.2.2 Configure package publishing
-use_private_publish_repository:
-    type: bool
-    help: Use a private package repository to publish this package to (y/N)?
-    default: no
-    when: "{{ package_type == 'package' }}"
-
-private_publish_repository_url:
-    type: str
-    help: URL of the private package repository to publish this package to?
-    default: "{% if ci == 'gitlab' %}https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi{% else %}https://<private-pypi-url>{% endif %}"
-    when: "{{ use_private_publish_repository }}"
-    validator: >-
-        {% if use_private_publish_repository %}
-            {% if ci == 'gitlab' and not (private_publish_repository_url | regex_search('https://gitlab.com/api/v4/projects/.+/packages/pypi')) %}
-            Invalid GitLab URL to publish, example: https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi
-            {% elif not private_publish_repository_url | regex_search('^https:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$') %}
-            Invalid URL for private publish repository, example: https://private-pypi.org/simple
-            {% elif not private_publish_repository_url %}
-            Private publish repository URL is required.
-            {% endif %}
-        {% endif %}
-
-# 1.2.3 Setup GitHub CI/CD
-# TODO: setup private package support (https://github.com/lukin0110/poetry-copier/issues/17)
-
 #######################################################################################################################
 # 2. Computed or fixed values
 # Compute, don't prompt. https://github.com/copier-org/copier/issues/716#issuecomment-1263307193
@@ -146,10 +91,10 @@ python_version:
     default: "3.14.3"
     when: false
 
-poetry_version:
+uv_version:
     type: str
-    help: What Poetry version do you want to use?
-    default: "1.8.4"
+    help: What uv version do you want to use?
+    default: "0.10.7"
     when: false
 
 # The validator of the `name` field ensures that the name only contains alphanumeric characters and single spaces.

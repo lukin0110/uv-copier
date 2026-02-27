@@ -38,35 +38,6 @@ pip install {{ package_slug }}
 Go to [VS Code](https://code.visualstudio.com/), download and install VS Code.
 </details>
 
-{% if use_private_package_repository %}<details>
-<summary>3. Configure Poetry to use the private package repository</summary>
-
-[Create a personal access token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#create-a-personal-access-token) with the `api` scope and use it to [add your private package repository credentials to your Poetry's `auth.toml` file](https://python-poetry.org/docs/repositories/#configuring-credentials):
-
-```toml
-# Locations of the auth.toml file:
-# macOS:   ~/Library/Application Support/pypoetry/auth.toml
-# Linux:   ~/.config/pypoetry/auth.toml
-[http-basic.{{ private_package_repository_name }}]
-username = "{personal access token name}"
-password = "{personal access token}"
-```
-</details>
-
-<details>
-<summary>4. Link Poetry & Docker Compose</summary>
-
-Export the location of your private package repository credentials so that Docker Compose can load these as a [build and run time secret](https://docs.docker.com/compose/compose-file/compose-file-v3/#secrets-configuration-reference):
-
-```sh
-# Locations of the auth.toml file:
-# macOS:   ~/Library/Application Support/pypoetry/auth.toml
-# Linux:   ~/.config/pypoetry/auth.toml
-cat << EOF >> ~/.bashrc
-export POETRY_AUTH_TOML_PATH="~/.config/pypoetry/auth.toml"
-EOF
-```
-</details>{% endif %}
 </details>
 
 #### 1. Open DevContainer with VS Code
@@ -84,9 +55,9 @@ poe lint
 poe test
 ```
 
-#### 4. Update poetry lock file
+#### 4. Update uv lock file
 ```bash
-poetry lock --no-update
+uv lock
 ```
 
 ---

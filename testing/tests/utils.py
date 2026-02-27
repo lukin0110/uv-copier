@@ -52,13 +52,13 @@ def assert_toml(path: Path) -> dict[str, Any]:
 def assert_yaml(path: Path) -> dict[str, Any]:
     """Check if the given path is a valid yaml file."""
     try:
-        with path.open("r") as fh:
+        with path.open("r", encoding="utf-8") as fh:
             return yaml.full_load(fh)
     except yaml.YAMLError as e:
         raise AssertionError(f"Could not load: {path}") from e
 
 
-def assert_devcontainer(path: Path, /, github: bool = False, gitlab: bool = False) -> None:
+def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = False) -> None:
     """Check if the given path is a valid devcontainer definition."""
     if github:
         extensions = [
@@ -70,7 +70,7 @@ def assert_devcontainer(path: Path, /, github: bool = False, gitlab: bool = Fals
     else:
         extensions = []
     try:
-        with path.open("r") as fh:
+        with path.open("r", encoding="utf-8") as fh:
             data = json.load(fh)
             expected = {
                 "name": "mcfly",
