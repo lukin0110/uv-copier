@@ -1,15 +1,19 @@
 {
-    "name": "Poetry Copier",
-    "build": {
-        "context": "..",
-        "dockerfile": "Dockerfile"
-    },
+    "name": "Uv Copier",
+    "image": "ghcr.io/astral-sh/uv:python3.13-trixie",
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2": {
-            "username": "vscode"
+        "ghcr.io/devcontainers-extra/features/devcontainers-cli:1": {},
+        "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
+            "packages": "starship"
         }
     },
-    "remoteUser": "vscode",
+    "postCreateCommand": "cd testing && uv sync",
+    "remoteEnv": {
+        "VIRTUAL_ENV": "/opt/venv",
+        "PATH": "/opt/venv/bin:${containerEnv:PATH}",
+        "UV_PROJECT_ENVIRONMENT": "/opt/venv"
+    },
+    "onCreateCommand": "git config --system --add safe.directory '*' && echo 'eval \"$(starship init bash)\"' >> ~/.bashrc",
     "customizations": {
         "vscode": {
             "extensions": [
@@ -39,7 +43,7 @@
                 "[toml]": {
                     "editor.formatOnSave": false
                 },
-                "python.defaultInterpreterPath": "/opt/testing-env/bin/python",
+                "python.defaultInterpreterPath": "/opt/venv/bin/python",
                 "workbench.editor.wrapTabs": true
             }
         }

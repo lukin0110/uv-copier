@@ -6,8 +6,6 @@
 A [copier](https://copier.readthedocs.io/en/stable/) template for scaffolding Python packages and apps (FastAPI and Gradio) using [Poetry](https://python-poetry.org/) as package 
 manager and [Development Containers](https://containers.dev/) as reproducible development environment.
 
-This template is a loose port of the [Radix Poetry Cookiecutter](https://github.com/radix-ai/poetry-cookiecutter) and comes with the same [LICENSE](LICENSE).
-
 ## 💻 Demo
 
 Check out the following demos for examples of scaffolded projects using this template:
@@ -22,7 +20,7 @@ Check out the following demos for examples of scaffolded projects using this tem
 - 🐳 Reproducible [Docker](https://www.docker.com/) based development environments with [Docker Compose](https://docs.docker.com/compose/) and [Development Containers](https://containers.dev/)
 - 🤝 Integrated support for [VSCode](https://code.visualstudio.com/) with [VSCode Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) and [GitHub Codespaces](https://github.com/features/codespaces)
 - 🐍 Scaffold a Python package or a [FastAPI](https://fastapi.tiangolo.com/) app with [Pydantic V2](https://docs.pydantic.dev/2.5/), [Django](https://www.djangoproject.com/) app, [Streamlit](https://streamlit.io/) app or [Gradio](https://www.gradio.app/) app to demo Machine Learning models
-- 📦 Dependency management with [Poetry](https://python-poetry.org/)
+- 📦 Dependency management with [uv](https://docs.astral.sh/uv/)
 - 🏃 Task running with [Poe the Poet](https://poethepoet.natn.io/index.html)
 - ✍️ Code formatting with [Ruff](https://docs.astral.sh/ruff/)
 - ✅ Code linting with [Pre-commit](https://pre-commit.com/), [Ty](https://docs.astral.sh/ty/), and [Ruff](https://docs.astral.sh/ruff/)

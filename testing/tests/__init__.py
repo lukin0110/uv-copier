@@ -1,7 +1,8 @@
-"""Poetry Copier Test suite.
+"""Uv Copier Test suite.
 
 Run:
-> poetry run ruff check
-> poetry run ruff format
-> poetry run pytest
+> uv run ruff check
+> uv run ruff format
+> uv run -m pytest
+> uv run ty check
 """

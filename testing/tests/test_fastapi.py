@@ -22,8 +22,8 @@ def test_github_generation(answers: dict[str, str | bool], expected_paths: set[s
     }
     with TemporaryDirectory() as tmpdir:
         logger.info("GitHub package: %s", tmpdir)
-        _path = Path(__file__).parent.parent.parent / "template"
-        copier.run_copy(str(_path.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
+        path_ = Path(__file__).parent.parent.parent / "template"
+        copier.run_copy(str(path_.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
         expected = expected_paths | {
             ".github/workflows/push_to_ghcr.yml",
             ".github/workflows/test.yml",

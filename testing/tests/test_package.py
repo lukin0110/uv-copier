@@ -20,8 +20,8 @@ def test_github_generation(answers: dict[str, str | bool], expected_paths: set[s
     }
     with TemporaryDirectory() as tmpdir:
         logger.info("GitHub package: %s", tmpdir)
-        _path = Path(__file__).parent.parent.parent / "template"
-        copier.run_copy(str(_path.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
+        path_ = Path(__file__).parent.parent.parent / "template"
+        copier.run_copy(str(path_.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
         expected = expected_paths | {
             ".github/workflows/publish.yml",
             ".github/workflows/test.yml",
@@ -43,8 +43,8 @@ def test_gitlab_generation(answers: dict[str, str | bool], expected_paths: set[s
     }
     with TemporaryDirectory() as tmpdir:
         logger.info("GitLab package: %s", tmpdir)
-        _path = Path(__file__).parent.parent.parent / "template"
-        copier.run_copy(str(_path.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
+        path_ = Path(__file__).parent.parent.parent / "template"
+        copier.run_copy(str(path_.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
         expected = expected_paths | {".gitlab-ci.yml"}
         assert_paths(tmpdir, expected)
         assert_devcontainer(Path(tmpdir) / ".devcontainer/devcontainer.json", gitlab=True)
@@ -62,8 +62,8 @@ def test_no_ci_generation(answers: dict[str, str | bool], expected_paths: set[st
     }
     with TemporaryDirectory() as tmpdir:
         logger.info("No CI package: %s", tmpdir)
-        _path = Path(__file__).parent.parent.parent / "template"
-        copier.run_copy(str(_path.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
+        path_ = Path(__file__).parent.parent.parent / "template"
+        copier.run_copy(str(path_.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
         assert_paths(tmpdir, expected_paths)
         assert_devcontainer(Path(tmpdir) / ".devcontainer/devcontainer.json")
         assert_toml(Path(tmpdir) / "pyproject.toml")

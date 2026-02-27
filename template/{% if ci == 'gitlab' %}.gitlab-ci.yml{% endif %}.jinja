@@ -12,7 +12,7 @@ stages:
 # Compute CI image hash.
 .compute_ci_hash:
   before_script:
-    - export DOCKER_IMAGE_SHA="$(sha1sum Dockerfile poetry.lock pyproject.toml | sha1sum | cut -c 1-12)"
+    - export DOCKER_IMAGE_SHA="$(sha1sum Dockerfile uv.lock pyproject.toml | sha1sum | cut -c 1-12)"
     - echo "CI_IMAGE_SHA=$DOCKER_IMAGE_SHA" >> .env
     - echo -e "\e[95mCI image hash computed = $DOCKER_IMAGE_SHA\e[0m"
   artifacts:
@@ -44,7 +44,6 @@ stages:
         DOCKER_BUILDKIT=1 docker build \
           --build-arg BUILDKIT_INLINE_CACHE=1 \
           --cache-from "$CI_REGISTRY_IMAGE/ci:$CI_IMAGE_SHA" \
-          --secret id=poetry-auth,src=auth.toml \
           --tag $DOCKER_IMAGE:$DOCKER_IMAGE_SHA \
           --target $DOCKER_TARGET \
           .
@@ -145,13 +144,9 @@ gemnasium-python-dependency_scanning:
 Publish:
   stage: Publish
   image: $CI_REGISTRY_IMAGE/ci:$CI_IMAGE_SHA
-  script:{% if use_private_publish_repository %}
-    - rm /root/.config/pypoetry/auth.toml
-    - poetry config repositories.private {{ private_publish_repository_url }}
-    - poetry config http-basic.private "gitlab-ci-token" "$CI_JOB_TOKEN"
-    - poetry publish --build --repository private{% else %}
-    - poetry config pypi-token.pypi "$POETRY_PYPI_TOKEN_PYPI"
-    - poetry publish --build{% endif %}
+  script:
+    - uv build
+    - uv publish
   needs: ["Build CI image", "Test"]
   when: manual
 #  only:

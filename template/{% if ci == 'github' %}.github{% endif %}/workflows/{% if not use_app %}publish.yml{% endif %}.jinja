@@ -1,13 +1,8 @@
-# Configure the following variables in your repository secrets:{% if use_private_publish_repository %}
-# PRIVATE_PYPI_USERNAME
-# PRIVATE_PYPI_TOKEN
+# Configure the following variables in your repository secrets:
+# UV_PUBLISH_TOKEN
 #
-# Username and password must be provided by the private repository.
-#{% else %}
-# POETRY_PYPI_TOKEN_PYPI
+# The UV_PUBLISH_TOKEN must be created on: https://pypi.org/manage/account/token/
 #
-# The POETRY_PYPI_TOKEN_PYPI must be created on: https://pypi.org/manage/account/token/
-#{% endif %}
 name: Publish package
 
 on:
@@ -17,25 +12,19 @@ on:
 
 jobs:
   publish:
-    name: Publish
     runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "{{ python_version }}"
-
-      - name: Install Poetry
-        run: pip install --no-input poetry=={{ poetry_version }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
 
       - name: Publish package
-        run: |{% if use_private_publish_repository %}
-          poetry config repositories.private {{ private_publish_repository_url }}
-          poetry config http-basic.private {% raw %}"${{ secrets.PRIVATE_PYPI_USERNAME }}" "${{ secrets.PRIVATE_PYPI_TOKEN }}"{% endraw %}
-          poetry publish --build --repository private{% else %}
-          poetry config pypi-token.pypi "{% raw %}${{ secrets.POETRY_PYPI_TOKEN_PYPI }}{% endraw %}"
-          poetry publish --build{% endif %}
+        run: |
+          uv build
+          uv publish
