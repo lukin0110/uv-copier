@@ -19,7 +19,8 @@
       "extensions": [
         "astral-sh.ty",
         "charliermarsh.ruff",
-        "eamodio.gitlens",
+        "eamodio.gitlens",{% if use_fastapi %}
+        "FastAPILabs.fastapi-vscode",{% endif %}
         "GitHub.copilot-chat",{% if ci =='github' %}
         "GitHub.vscode-github-actions",
         "GitHub.vscode-pull-request-github",{% elif ci == 'gitlab' %}
