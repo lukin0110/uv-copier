@@ -43,26 +43,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
 
       - name: Generate Python package
         run: |
-          pip install copier==9.2.0
           rm -Rf .git/
-          copier copy . ./generated/ \
-          --quiet \
-          --data ci="github" \
-          --data repository_url="https://github.com/lukin0110/mcfly/" \
-          --data name="McFly" \
-          --data description="A package used in tests to test a scaffolded python package" \
-          --data package_type="package" \
-          --data use_pydantic=yes \
-          --data use_makefile=no \
-          --data python_version="3.14.3" \
-          --data package_slug="mcfly"
+          uvx copier copy . ./generated/ \
+            --quiet \
+            --data ci="github" \
+            --data repository_url="https://github.com/lukin0110/mcfly/" \
+            --data name="McFly" \
+            --data description="A package used in tests to test a scaffolded python package" \
+            --data package_type="package" \
+            --data use_pydantic=yes \
+            --data use_makefile=no \
+            --data python_version="${{ matrix.python-version }}" \
+            --data package_slug="mcfly"
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
@@ -78,6 +78,7 @@ jobs:
           DOCKER_BUILDKIT: 1
         run: |
           git init
+          uv lock
           devcontainer up --workspace-folder .
 
       - name: Lint package
@@ -98,26 +99,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
 
       - name: Generate FastAPI app
         run: |
-          pip install copier==9.2.0
           rm -Rf .git/
-          copier copy . ./generated/ \
-          --quiet \
-          --data ci="github" \
-          --data repository_url="https://github.com/lukin0110/mcfly-api/" \
-          --data name="McFly API" \
-          --data description="A package used in tests to test a scaffolded FastAPI app" \
-          --data package_type="fastapi" \
-          --data use_pydantic=yes \
-          --data use_makefile=no \
-          --data python_version="3.14.3" \
-          --data package_slug="mcfly"
+          uvx copier copy . ./generated/ \
+            --quiet \
+            --data ci="github" \
+            --data repository_url="https://github.com/lukin0110/mcfly-api/" \
+            --data name="McFly API" \
+            --data description="A package used in tests to test a scaffolded FastAPI app" \
+            --data package_type="fastapi" \
+            --data use_pydantic=yes \
+            --data use_makefile=no \
+            --data python_version="${{ matrix.python-version }}" \
+            --data package_slug="mcfly"
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
@@ -133,6 +134,7 @@ jobs:
           DOCKER_BUILDKIT: 1
         run: |
           git init
+          uv lock
           devcontainer up --workspace-folder .
 
       - name: Lint package
