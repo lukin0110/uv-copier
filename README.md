@@ -3,7 +3,7 @@
 
 # Poetry Copier
 
-A [copier](https://copier.readthedocs.io/en/stable/) template for scaffolding Python packages and apps (FastAPI and Gradio) using [Poetry](https://python-poetry.org/) as package 
+A [copier](https://copier.readthedocs.io/en/stable/) template for scaffolding Python packages and apps (FastAPI and Gradio) using [uv](https://docs.astral.sh/uv/) as package 
 manager and [Development Containers](https://containers.dev/) as reproducible development environment.
 
 ## 💻 Demo
@@ -53,7 +53,7 @@ This template aims to provide a minimal, but fully functional, project structure
 
 Setting up a project can be tedious and requires a lot of "plumbing" to get `CI/CD` right, to get `pyproject.toml` right, to get the `Dockerfile` right, etc.
 
-The use of [Docker](https://www.docker.com/) in conjunction with [Development Containers](https://containers.dev/) are key in this template to provide a smooth development experience. It's possible to develop without a *Development Container* and use [Poetry](https://python-poetry.org/) with [virtual environments](https://docs.python.org/3/library/venv.html) straight away, however this template is optimized to provide a working development environment with development containers.
+The use of [Docker](https://www.docker.com/) in conjunction with [Development Containers](https://containers.dev/) are key in this template to provide a smooth development experience. It's possible to develop without a *Development Container* and use [uv](https://docs.astral.sh/uv/) with [virtual environments](https://docs.python.org/3/library/venv.html) straight away, however this template is optimized to provide a working development environment with development containers.
 
 > [!Note]
 >
