@@ -546,7 +546,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "copier", specifier = ">=9.2.0" },
+    { name = "copier", specifier = ">=9.12.0" },
     { name = "deepdiff", specifier = ">=8.6.1" },
     { name = "pre-commit", specifier = ">=4.1.0" },
     { name = "pytest", specifier = ">=8.1.1" },
