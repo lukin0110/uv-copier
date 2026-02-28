@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 
 import copier
 
-from .utils import assert_paths, assert_toml, assert_yaml
+from .utils import assert_devcontainer, assert_paths, assert_toml, assert_yaml
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +31,7 @@ def test_github_generation(answers: dict[str, str | bool], expected_paths: set[s
             "src/mcfly/app.py",
         }
         assert_paths(tmpdir, expected)
+        assert_devcontainer(Path(tmpdir) / ".devcontainer/devcontainer.json", github=True, fastapi=True)
         toml = assert_toml(Path(tmpdir) / "pyproject.toml")
         assert toml["tool"]["poe"]["tasks"]["serve"] == {
             "help": "Serve FastAPI App",
