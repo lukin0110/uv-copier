@@ -91,7 +91,6 @@ def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = F
                         "extensions": [
                             "astral-sh.ty",
                             "charliermarsh.ruff",
-                            "eamodio.gitlens",
                             *extensions,
                             "ms-azuretools.vscode-docker",
                             "ms-python.python",
