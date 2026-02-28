@@ -74,9 +74,9 @@ repository_url:
     default: "{% if ci == 'github' %}https://github.com/<username>/<repo>/{% else %}https://gitlab.com/<username>/<repo>/{% endif %}"
     validator: >-
         {% if ci == 'github' and not (repository_url | trim | regex_search('^https://github\\.com/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+/$')) %}
-        Invalid GitHub URL, example: https://github.com/lukin0110/poetry-copier-fastapi-demo/
+        Invalid GitHub URL, example: https://github.com/lukin0110/uv-copier-fastapi-demo/
         {% elif ci == 'gitlab' and not (repository_url | regex_search('^https://gitlab\\.com/[a-zA-Z0-9/_-]+/$')) %}
-        Invalid GitHub URL, example: https://gitlab.com/lukin0110/poetry-copier-fastapi-gitlab-demo/
+        Invalid GitLab URL, example: https://gitlab.com/lukin0110/uv-copier-fastapi-gitlab-demo/
         {% elif not repository_url %}
         Repository URL is required.
         {% endif %}

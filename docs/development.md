@@ -6,7 +6,7 @@
 
 Scaffold locally:
 ```bash
-copier copy --vcs-ref HEAD ../poetry-copier .
+copier copy --vcs-ref HEAD ../uv-copier .
 ```
 
 ## Run tests

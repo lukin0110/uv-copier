@@ -58,17 +58,19 @@ def assert_yaml(path: Path) -> dict[str, Any]:
         raise AssertionError(f"Could not load: {path}") from e
 
 
-def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = False) -> None:
+def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = False, fastapi: bool = False) -> None:
     """Check if the given path is a valid devcontainer definition."""
+    extensions: list[str] = []
+    if fastapi:
+        extensions.append("FastAPILabs.fastapi-vscode")
+    extensions.append("GitHub.copilot-chat")
     if github:
-        extensions = [
+        extensions.extend([
             "GitHub.vscode-github-actions",
             "GitHub.vscode-pull-request-github",
-        ]
+        ])
     elif gitlab:
-        extensions = ["GitLab.gitlab-workflow"]
-    else:
-        extensions = []
+        extensions.append("GitLab.gitlab-workflow")
     try:
         with path.open("r", encoding="utf-8") as fh:
             data = json.load(fh)
@@ -90,7 +92,6 @@ def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = F
                             "astral-sh.ty",
                             "charliermarsh.ruff",
                             "eamodio.gitlens",
-                            "GitHub.copilot-chat",
                             *extensions,
                             "ms-azuretools.vscode-docker",
                             "ms-python.python",
