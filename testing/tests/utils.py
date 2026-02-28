@@ -112,7 +112,7 @@ def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = F
                             "files.autoSave": "onFocusChange",
                             "[python]": {"editor.defaultFormatter": "charliermarsh.ruff"},
                             "[toml]": {"editor.formatOnSave": False},
-                            "python.defaultInterpreterPath": "/opt/mcfly-env/bin/python",
+                            "python.defaultInterpreterPath": "/opt/venv/bin/python",
                             "python.terminal.activateEnvironment": False,
                             "python.testing.pytestEnabled": True,
                             "ruff.importStrategy": "fromEnvironment",

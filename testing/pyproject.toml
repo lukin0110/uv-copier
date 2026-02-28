@@ -7,7 +7,7 @@ description = "A test suite for the uv copier template"
 readme = "README.md"
 requires-python = ">=3.13,<3.15"
 dependencies = [
-    "copier>=9.2.0",
+    "copier>=9.12.0",
     "deepdiff>=8.6.1",
     "pre-commit>=4.1.0",
     "pytest>=8.1.1",

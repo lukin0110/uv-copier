@@ -33,12 +33,12 @@ Check out the following demos for examples of scaffolded projects using this tem
 
 1. Install the latest [copier](https://copier.readthedocs.io/en/stable/#installation) in your [Python environment](https://github.com/pyenv/pyenv) _(please use python>=3.8)_:
     ```bash
-    pip install "copier>=9.2.0"
+    pip install "copier>=9.12.0"
     ```
 2. Create a new repository and clone it locally.
 3. Run copier in your cloned directory:
     ```bash
-    copier copy --vcs-ref=v0.4.3 git@github.com:lukin0110/uv-copier.git .
+    copier copy --vcs-ref=v1.0.0 git@github.com:lukin0110/uv-copier.git .
     ```
 
 ### Updating a project

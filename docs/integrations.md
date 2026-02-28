@@ -22,7 +22,7 @@ images. By default, GitHub Actions don't have permission to write to the ghcr.io
 
 ```yaml
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           files: reports/coverage.xml
         env:
