@@ -5,29 +5,19 @@ FROM python:$PYTHON_VERSION-slim AS base
 LABEL org.opencontainers.image.description="{{ description }}"
 
 # Configure Python to print tracebacks on crash [1], and to not buffer stdout and stderr [2].
+# Activate a virtual environment [3].
 # [1] https://docs.python.org/3/using/cmdline.html#envvar-PYTHONFAULTHANDLER
 # [2] https://docs.python.org/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
+# [3] https://docs.astral.sh/uv/concepts/projects/config/#project-environment-path
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
-    UV_VERSION={{ uv_version }}
-
-# Install uv.
-RUN --mount=type=cache,target=/root/.cache/pip/ pip install uv==$UV_VERSION
-
-# Install curl & compilers that may be required for certain packages or platforms.
-# The stock ubuntu image cleans up /var/cache/apt automatically. This makes the build process slow.
-# Enable apt caching by removing docker-clean
-RUN rm /etc/apt/apt.conf.d/docker-clean
-RUN --mount=type=cache,target=/var/cache/apt/ \
-    --mount=type=cache,target=/var/lib/apt/ \
-    apt-get update && apt-get install --no-install-recommends --yes build-essential && \
-    rm -rf /var/lib/apt/lists/*
-
-# Create and activate a virtual environment.
-# https://docs.astral.sh/uv/concepts/projects/config/#project-environment-path
-ENV VIRTUAL_ENV=/opt/venv \
+    UV_VERSION={{ uv_version }} \
+    VIRTUAL_ENV=/opt/venv \
     PATH=/opt/venv/bin:$PATH \
     UV_PROJECT_ENVIRONMENT=/opt/venv
+
+# Install uv.
+RUN --mount=type=cache,target=/root/.cache/pip/ pip install --disable-pip-version-check uv==$UV_VERSION
 
 # Set the working directory.
 WORKDIR /workspaces/{{ package_slug }}/
@@ -39,8 +29,11 @@ RUN mkdir -p /root/.cache/uv && mkdir -p src/{{ package_slug }}/ && touch src/{{
 
 FROM base AS dev
 
-# Install DevContainer utilities: zsh, git, docker cli, starship prompt.
+# Install DevContainer utilities: curl, zsh, git, docker cli, starship prompt.
 # Docker: only docker cli is installed and not the entire engine.
+# The stock ubuntu image cleans up /var/cache/apt automatically. This makes the build process slow.
+# Enable apt caching by removing docker-clean
+RUN rm /etc/apt/apt.conf.d/docker-clean
 RUN --mount=type=cache,target=/var/cache/apt/ \
     --mount=type=cache,target=/var/lib/apt/ \
     apt-get update && apt-get install --yes --no-install-recommends curl openssh-client git zsh gnupg  && \
