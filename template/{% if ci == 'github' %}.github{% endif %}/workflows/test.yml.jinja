@@ -23,7 +23,7 @@ jobs:
     steps:
       # https://github.com/actions/checkout
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Add an empty .env file.
       # The devcontainers/ci build action fails when the docker-compose.yml file references an .env file that does not exist.
@@ -32,7 +32,7 @@ jobs:
 
       # https://github.com/docker/login-action
       - name: Log in to registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: {% raw %}${{ github.actor }}{% endraw %}
