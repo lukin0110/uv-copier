@@ -19,7 +19,7 @@ jobs:
         python-version: [ "3.14.3" ]
     name: Python {% raw %}${{ matrix.python-version }}{% endraw %}
     env:
-      TAG: devcontainer-{% raw %}${{ matrix.python-version }}-${{ github.head_ref || github.ref_name }}{% endraw %}
+      BRANCH: {% raw %}${{ github.head_ref || github.ref_name }}{% endraw %}
     steps:
       # https://github.com/actions/checkout
       - name: Checkout
@@ -29,6 +29,9 @@ jobs:
       # The devcontainers/ci build action fails when the docker-compose.yml file references an .env file that does not exist.
       - name: Touch .env
         run: touch .env
+
+      - name: Set Docker tag
+        run: echo "DOCKER_TAG=devcontainer-{% raw %}${{ matrix.python-version }}{% endraw %}-${BRANCH//\//-}" >> $GITHUB_ENV
 
       # https://github.com/docker/login-action
       - name: Log in to registry
@@ -45,21 +48,21 @@ jobs:
           PYTHON_VERSION: {% raw %}${{ matrix.python-version }}{% endraw %}
         with:
           imageName: {% raw %}ghcr.io/${{ github.repository }}{% endraw %}
-          cacheFrom: {% raw %}ghcr.io/${{ github.repository }}:${{ env.TAG }}{% endraw %}
-          imageTag: {% raw %}${{ env.TAG }}{% endraw %}
+          cacheFrom: {% raw %}ghcr.io/${{ github.repository }}:${{ env.DOCKER_TAG }}{% endraw %}
+          imageTag: {% raw %}${{ env.DOCKER_TAG }}{% endraw %}
           push: always
 
       - name: Run lint
         uses: devcontainers/ci@v0.3
         with:
-          cacheFrom: {% raw %}ghcr.io/${{ github.repository }}:${{ env.TAG }}{% endraw %}
+          cacheFrom: {% raw %}ghcr.io/${{ github.repository }}:${{ env.DOCKER_TAG }}{% endraw %}
           push: never
           runCmd: poe lint
 
       - name: Run test
         uses: devcontainers/ci@v0.3
         with:
-          cacheFrom: {% raw %}ghcr.io/${{ github.repository }}:${{ env.TAG }}{% endraw %}
+          cacheFrom: {% raw %}ghcr.io/${{ github.repository }}:${{ env.DOCKER_TAG }}{% endraw %}
           push: never
           runCmd: poe test
 
