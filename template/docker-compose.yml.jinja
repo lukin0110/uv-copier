@@ -23,6 +23,9 @@ services:
       - .:/workspaces/{{ package_slug }}/
     command: ["serve", "--dev"]
 {% endif %}
+volumes:
+  claude-code-config:
+
 networks:
   default:
     name: {{ package_slug }}-network
