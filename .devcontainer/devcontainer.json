@@ -14,6 +14,9 @@
         "UV_PROJECT_ENVIRONMENT": "/opt/venv"
     },
     "onCreateCommand": "git config --system --add safe.directory '*' && echo 'eval \"$(starship init bash)\"' >> ~/.bashrc",
+    "mounts": [
+        "type=volume,source=claude-code-config,target=/root/.claude,consistency=cached"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [
