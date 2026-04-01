@@ -7,13 +7,13 @@ readme = "README.md"
 requires-python = ">={{ python_version }},<4.0"
 dependencies = [
     {% if use_app %}"poethepoet (>=0.29.0)",{% endif %}{% if use_django %}
-    "Django (>=5.0.2)",
+    "Django (>=6.0.3)",
     "gunicorn (>=23.0.0)",{% elif use_fastapi %}
-    "fastapi[all] (>=0.134.0)",
-    "uvicorn[standard] (>=0.41.0)",
+    "fastapi[all] (>=0.135.2)",
+    "uvicorn[standard] (>=0.42.0)",
     "uvloop (>=0.22.1)",{% elif use_gradio %}
-    "gradio (>=4.19.1)",{% elif use_streamlit %}
-    "streamlit (>=1.31.1)",{% endif %}{% if use_pydantic %}
+    "gradio (>=6.10.0)",{% elif use_streamlit %}
+    "streamlit (>=1.56.0)",{% endif %}{% if use_pydantic %}
     "pydantic (>=2.12.5)",{% endif %}
 ]
 
