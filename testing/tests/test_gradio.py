@@ -41,7 +41,7 @@ def test_github_generation(answers: dict[str, str | bool], expected_paths: set[s
                     "help": "Bind socket to this host (default: 0.0.0.0)",
                     "name": "host",
                     "options": ["--host"],
-                    "default": "0.0.0.0",  # noqa: S104
+                    "default": "0.0.0.0",  # ruff: ignore[hardcoded-bind-all-interfaces]
                 },
                 {
                     "help": "Bind socket to this port (default: 8000)",

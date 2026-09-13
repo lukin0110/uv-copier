@@ -74,59 +74,59 @@ def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = F
     try:
         with path.open("r", encoding="utf-8") as fh:
             data = json.load(fh)
-            expected = {
-                "name": "mcfly",
-                "dockerComposeFile": "../docker-compose.yml",
-                "service": "devcontainer",
-                "runServices": ["devcontainer"],
-                "shutdownAction": "stopCompose",
-                "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/mcfly/,type=bind,consistency=delegated",
-                "workspaceFolder": "/workspaces/mcfly/",
-                "remoteUser": "root",
-                "overrideCommand": True,
-                "mounts": [
-                    "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock,consistency=consistent",
-                    "type=volume,source=claude-code-config,target=/root/.claude,consistency=cached",
-                ],
-                "customizations": {
-                    "vscode": {
-                        "extensions": [
-                            "astral-sh.ty",
-                            "charliermarsh.ruff",
-                            *extensions,
-                            "ms-azuretools.vscode-docker",
-                            "ms-python.python",
-                            "ryanluker.vscode-coverage-gutters",
-                            "tamasfe.even-better-toml",
-                        ],
-                        "settings": {
-                            "coverage-gutters.coverageFileNames": ["reports/coverage.xml"],
-                            "editor.codeActionsOnSave": {
-                                "source.fixAll": "explicit",
-                                "source.organizeImports": "explicit",
-                            },
-                            "editor.formatOnSave": True,
-                            "editor.rulers": [120],
-                            "editor.tabSize": 4,
-                            "dev.containers.copyGitConfig": True,
-                            "github.copilot.chat.edits.enabled": True,
-                            "files.autoSave": "onFocusChange",
-                            "[python]": {"editor.defaultFormatter": "charliermarsh.ruff"},
-                            "[toml]": {"editor.formatOnSave": False},
-                            "python.defaultInterpreterPath": "/opt/venv/bin/python",
-                            "python.terminal.activateEnvironment": False,
-                            "python.testing.pytestEnabled": True,
-                            "ruff.importStrategy": "fromEnvironment",
-                            "ruff.logLevel": "warning",
-                            "terminal.integrated.defaultProfile.linux": "zsh",
-                            "terminal.integrated.profiles.linux": {"zsh": {"path": "/usr/bin/zsh"}},
-                            "workbench.editor.wrapTabs": True,
-                        },
-                    },
-                },
-            }
-            diff = DeepDiff(expected, data)
-            pprint(diff)  # noqa: T203
-            assert not diff
     except json.JSONDecodeError as e:
         raise AssertionError(f"Could not load: {path}") from e
+    expected = {
+        "name": "mcfly",
+        "dockerComposeFile": "../docker-compose.yml",
+        "service": "devcontainer",
+        "runServices": ["devcontainer"],
+        "shutdownAction": "stopCompose",
+        "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/mcfly/,type=bind,consistency=delegated",
+        "workspaceFolder": "/workspaces/mcfly/",
+        "remoteUser": "root",
+        "overrideCommand": True,
+        "mounts": [
+            "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock,consistency=consistent",
+            "type=volume,source=claude-code-config,target=/root/.claude,consistency=cached",
+        ],
+        "customizations": {
+            "vscode": {
+                "extensions": [
+                    "astral-sh.ty",
+                    "charliermarsh.ruff",
+                    *extensions,
+                    "ms-azuretools.vscode-docker",
+                    "ms-python.python",
+                    "ryanluker.vscode-coverage-gutters",
+                    "tamasfe.even-better-toml",
+                ],
+                "settings": {
+                    "coverage-gutters.coverageFileNames": ["reports/coverage.xml"],
+                    "editor.codeActionsOnSave": {
+                        "source.fixAll": "explicit",
+                        "source.organizeImports": "explicit",
+                    },
+                    "editor.formatOnSave": True,
+                    "editor.rulers": [120],
+                    "editor.tabSize": 4,
+                    "dev.containers.copyGitConfig": True,
+                    "github.copilot.chat.edits.enabled": True,
+                    "files.autoSave": "onFocusChange",
+                    "[python]": {"editor.defaultFormatter": "charliermarsh.ruff"},
+                    "[toml]": {"editor.formatOnSave": False},
+                    "python.defaultInterpreterPath": "/opt/venv/bin/python",
+                    "python.terminal.activateEnvironment": False,
+                    "python.testing.pytestEnabled": True,
+                    "ruff.importStrategy": "fromEnvironment",
+                    "ruff.logLevel": "warning",
+                    "terminal.integrated.defaultProfile.linux": "zsh",
+                    "terminal.integrated.profiles.linux": {"zsh": {"path": "/usr/bin/zsh"}},
+                    "workbench.editor.wrapTabs": True,
+                },
+            },
+        },
+    }
+    diff = DeepDiff(expected, data)
+    pprint(diff)  # ruff: ignore[p-print]
+    assert not diff
