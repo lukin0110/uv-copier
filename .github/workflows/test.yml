@@ -16,7 +16,7 @@ jobs:
     name: PyTest (Python ${{ matrix.python-version }})
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
@@ -41,7 +41,7 @@ jobs:
     name: Generate Package (Python ${{ matrix.python-version }})
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
@@ -98,7 +98,7 @@ jobs:
     name: Generate FastAPI app (Python ${{ matrix.python-version }})
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
