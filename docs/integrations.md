@@ -26,6 +26,6 @@ images. By default, GitHub Actions don't have permission to write to the ghcr.io
         with:
           files: reports/coverage.xml
         env:
-          CODECOV_TOKEN: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 ```
 Link: https://github.com/codecov/codecov-action
