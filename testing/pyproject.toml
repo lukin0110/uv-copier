@@ -12,8 +12,8 @@ dependencies = [
     "pre-commit>=4.1.0",
     "pytest>=9.1.1",
     "pyyaml>=6.0.3",
-    "ruff>=0.15.2",
-    "ty>=0.0.19",
+    "ruff>=0.16.7",
+    "ty>=0.0.80",
 ]
 
 [tool.ruff]  # https://github.com/charliermarsh/ruff
@@ -27,7 +27,7 @@ preview = true  # https://docs.astral.sh/ruff/preview/
 [tool.ruff.lint]  # https://github.com/charliermarsh/ruff
 select = ["A", "ASYNC", "B", "BLE", "C4", "C90", "D", "DTZ", "E", "EM", "ERA", "F", "FBT", "FLY", "FURB", "G", "I", "ICN", "INP", "INT", "ISC", "LOG", "N", "NPY", "PERF", "PGH", "PIE", "PLC", "PLE", "PLR", "PLW", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "S", "SIM", "SLF", "SLOT", "T10", "T20", "TCH", "TID", "TRY", "UP", "W", "YTT"]
 extend-safe-fixes = ["TID252"]  # https://docs.astral.sh/ruff/settings/#extend-safe-fixes
-ignore = ["D203", "D213", "FBT001", "E501", "EM101", "EM102", "ISC001", "RET504", "S101", "TRY003", "W505"]
+ignore = ["D203", "D213", "FBT001", "E501", "EM101", "EM102", "ISC001", "RET504", "RUF201", "S101", "TRY003", "W505"]
 unfixable = ["ERA001", "F401", "F841", "T201", "T203"]  # https://docs.astral.sh/ruff/settings/#unfixable
 
 [tool.pytest.ini_options]  # https://docs.pytest.org/en/latest/reference/reference.html#ini-options-ref
