@@ -55,6 +55,11 @@ use_makefile:
     help: Do you want to use a Makefile with convenient shortcuts (y/N)?
     default: no
 
+use_claude:
+    type: bool
+    help: Do you want to use Claude Code as coding agent (y/N)?
+    default: no
+
 #######################################################################################################################
 # 1.2 Setup CI/CD
 #######################################################################################################################

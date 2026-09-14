@@ -11,12 +11,13 @@
   "remoteUser": "root",
   "overrideCommand": true,
   "mounts": [
-    "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock,consistency=consistent",
-    "type=volume,source=claude-code-config,target=/root/.claude,consistency=cached"
+    "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock,consistency=consistent"{% if use_claude %},
+    "type=volume,source=claude-code-config,target=/root/.claude,consistency=cached"{% endif %}
   ],
   "customizations": {
     "vscode": {
-      "extensions": [
+      "extensions": [{% if use_claude %}
+        "Anthropic.claude-code",{% endif %}
         "astral-sh.ty",
         "charliermarsh.ruff",{% if use_fastapi %}
         "FastAPILabs.fastapi-vscode",{% endif %}

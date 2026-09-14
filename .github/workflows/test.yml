@@ -61,6 +61,7 @@ jobs:
             --data package_type="package" \
             --data use_pydantic=yes \
             --data use_makefile=no \
+            --data use_claude=yes \
             --data python_version="${{ matrix.python-version }}" \
             --data package_slug="mcfly"
 
@@ -118,6 +119,7 @@ jobs:
             --data package_type="fastapi" \
             --data use_pydantic=yes \
             --data use_makefile=no \
+            --data use_claude=no \
             --data python_version="${{ matrix.python-version }}" \
             --data package_slug="mcfly"
 

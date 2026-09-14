@@ -12,6 +12,7 @@ def answers() -> dict[str, str | bool]:
         "package_type": "package",
         "use_pydantic": True,
         "use_makefile": False,
+        "use_claude": False,
         "use_private_package_repository": False,
         "python_version": "3.14.3",
         "package_slug": "mcfly",
