@@ -11,7 +11,7 @@ manager and [Development Containers](https://containers.dev/) as reproducible de
 Check out the following demos for examples of scaffolded projects using this template:
 
 - FastAPI App with GitHub Actions: [uv-copier-fastapi-demo](https://github.com/lukin0110/uv-copier-fastapi-demo)
-- Python Package with GitHub Actions: [uv-copier-package-demo](https://github.com/lukin0110/uv-copier-package-demo)
+- Python Package with GitHub Actions: [orval](https://github.com/lukin0110/orval)
 - FastAPI App with GitLab CI/CD: [uv-copier-fastapi-demo-gitlab](https://gitlab.com/lukin0110/uv-copier-fastapi-demo-gitlab)
 - Python Package GitLab CI/CD: [uv-copier-package-demo-gitlab](https://gitlab.com/lukin0110/uv-copier-package-demo-gitlab)
 
