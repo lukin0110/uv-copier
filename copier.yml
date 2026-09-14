@@ -57,7 +57,7 @@ use_makefile:
 
 use_claude:
     type: bool
-    help: Do you want to use Claude Code as coding agent (y/N)?
+    help: Do you want to use Claude Code as a coding agent (y/N)?
     default: no
 
 #######################################################################################################################
