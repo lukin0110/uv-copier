@@ -90,11 +90,13 @@ check_variant() (
             name="McFly API"
             url="https://github.com/lukin0110/mcfly-api/"
             desc="A package used in tests to test a scaffolded FastAPI app"
+            claude="no"
             ;;
         *)
             name="McFly"
             url="https://github.com/lukin0110/mcfly/"
             desc="A package used in tests to test a scaffolded python package"
+            claude="yes"
             ;;
     esac
 
@@ -118,6 +120,7 @@ check_variant() (
         --data package_type="$variant" \
         --data use_pydantic=yes \
         --data use_makefile=no \
+        --data use_claude="$claude" \
         --data python_version="3.14" \
         --data package_slug="mcfly" 2>&1) || fail_step "copier copy"
 

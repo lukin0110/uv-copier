@@ -31,7 +31,33 @@ def test_github_generation(answers: dict[str, str | bool], expected_paths: set[s
         assert_devcontainer(Path(tmpdir) / ".devcontainer/devcontainer.json", github=True)
         assert_toml(Path(tmpdir) / "pyproject.toml")
         assert_yaml(Path(tmpdir) / ".pre-commit-config.yaml")
-        assert_yaml(Path(tmpdir) / "docker-compose.yml")
+        compose = assert_yaml(Path(tmpdir) / "docker-compose.yml")
+        assert "volumes" not in compose
+
+
+def test_claude_generation(answers: dict[str, str | bool], expected_paths: set[str]) -> None:
+    """Should add the Claude Code extension and config volume when enabled."""
+    answers_ = {
+        "ci": "github",
+        "repository_url": "https://github.com/lukin0110/mcfly/",
+        **answers,
+        "use_claude": True,
+    }
+    with TemporaryDirectory() as tmpdir:
+        logger.info("Claude package: %s", tmpdir)
+        path_ = Path(__file__).parent.parent.parent / "template"
+        copier.run_copy(str(path_.absolute()), tmpdir, data=answers_, cleanup_on_error=True)
+        expected = expected_paths | {
+            ".github/workflows/publish.yml",
+            ".github/workflows/test.yml",
+            ".github/dependabot.yml",
+        }
+        assert_paths(tmpdir, expected)
+        assert_devcontainer(Path(tmpdir) / ".devcontainer/devcontainer.json", github=True, claude=True)
+        assert_toml(Path(tmpdir) / "pyproject.toml")
+        assert_yaml(Path(tmpdir) / ".pre-commit-config.yaml")
+        compose = assert_yaml(Path(tmpdir) / "docker-compose.yml")
+        assert compose["volumes"] == {"claude-code-config": None}
 
 
 def test_gitlab_generation(answers: dict[str, str | bool], expected_paths: set[str]) -> None:

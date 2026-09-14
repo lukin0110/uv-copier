@@ -58,8 +58,13 @@ def assert_yaml(path: Path) -> dict[str, Any]:
         raise AssertionError(f"Could not load: {path}") from e
 
 
-def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = False, fastapi: bool = False) -> None:
+def assert_devcontainer(
+    path: Path, /, *, github: bool = False, gitlab: bool = False, fastapi: bool = False, claude: bool = False
+) -> None:
     """Check if the given path is a valid devcontainer definition."""
+    mounts = ["type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock,consistency=consistent"]
+    if claude:
+        mounts.append("type=volume,source=claude-code-config,target=/root/.claude,consistency=cached")
     extensions: list[str] = []
     if fastapi:
         extensions.append("FastAPILabs.fastapi-vscode")
@@ -86,13 +91,11 @@ def assert_devcontainer(path: Path, /, *, github: bool = False, gitlab: bool = F
         "workspaceFolder": "/workspaces/mcfly/",
         "remoteUser": "root",
         "overrideCommand": True,
-        "mounts": [
-            "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock,consistency=consistent",
-            "type=volume,source=claude-code-config,target=/root/.claude,consistency=cached",
-        ],
+        "mounts": mounts,
         "customizations": {
             "vscode": {
                 "extensions": [
+                    *(["Anthropic.claude-code"] if claude else []),
                     "astral-sh.ty",
                     "charliermarsh.ruff",
                     *extensions,

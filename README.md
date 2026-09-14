@@ -19,6 +19,7 @@ Check out the following demos for examples of scaffolded projects using this tem
 
 - 🐳 Reproducible [Docker](https://www.docker.com/) based development environments with [Docker Compose](https://docs.docker.com/compose/) and [Development Containers](https://containers.dev/)
 - 🤝 Integrated support for [VSCode](https://code.visualstudio.com/) with [VSCode Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) and [GitHub Codespaces](https://github.com/features/codespaces)
+- 🤖 Optional [Claude Code](https://code.claude.com/docs/en/vs-code) integration in the DevContainer (VS Code extension + persisted credentials)
 - 🐍 Scaffold a Python package or a [FastAPI](https://fastapi.tiangolo.com/) app with [Pydantic V2](https://docs.pydantic.dev/2.5/), [Streamlit](https://streamlit.io/) app or [Gradio](https://www.gradio.app/) app to demo Machine Learning models
 - 📦 Dependency management with [uv](https://docs.astral.sh/uv/)
 - 🏃 Task running with [Poe the Poet](https://poethepoet.natn.io/index.html)
@@ -63,7 +64,7 @@ The use of [Docker](https://www.docker.com/) in conjunction with [Development Co
 
 - Reduce project setup
 - Provide [dev/prod parity](https://12factor.net/dev-prod-parity)
-- [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) independent. However, with a strong focus on [VSCode](https://code.visualstudio.com/) since it integrates nicely with *GitHub*, *Development Containers* and *GitHub Copilot*
+- [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) independent. However, with a strong focus on [VSCode](https://code.visualstudio.com/) since it integrates nicely with *GitHub*, *Development Containers*, *GitHub Copilot* and *Claude Code*
 - Provide a minimal workable setup
 - Don't enforce application or package architecture
 - Include the *usual suspects* of every project: CI/CD, linting, testing, package manager, development container, etc
