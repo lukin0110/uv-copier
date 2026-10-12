@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 
 import copier
 
-from .utils import assert_devcontainer, assert_paths, assert_toml, assert_yaml
+from .utils import assert_devcontainer, assert_paths, assert_test_workflow, assert_toml, assert_yaml
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +30,7 @@ def test_github_generation(answers: dict[str, str | bool], expected_paths: set[s
         assert_paths(tmpdir, expected)
         assert_devcontainer(Path(tmpdir) / ".devcontainer/devcontainer.json", github=True)
         assert_toml(Path(tmpdir) / "pyproject.toml")
+        assert_test_workflow(Path(tmpdir) / ".github/workflows/test.yml")
         assert_yaml(Path(tmpdir) / ".pre-commit-config.yaml")
         compose = assert_yaml(Path(tmpdir) / "docker-compose.yml")
         assert "volumes" not in compose

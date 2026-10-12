@@ -133,3 +133,14 @@ def assert_devcontainer(
     diff = DeepDiff(expected, data)
     pprint(diff)  # ruff: ignore[p-print]
     assert not diff
+
+
+def assert_test_workflow(path: Path) -> None:
+    """Check the GitHub test workflow builds the dev stage and runs lint and test in it."""
+    steps = assert_yaml(path)["jobs"]["test"]["steps"]
+    build = next(step["with"] for step in steps if step.get("name") == "Build image")
+    assert build["target"] == "dev"
+    assert build["build-args"] == "PYTHON_VERSION=${{ matrix.python-version }}"
+    runs = [step["run"] for step in steps if "run" in step]
+    assert any(run.startswith("docker run") and run.endswith("poe lint") for run in runs)
+    assert any(run.startswith("docker run") and run.endswith("poe test") for run in runs)
