@@ -65,32 +65,38 @@ jobs:
             --data python_version="${{ matrix.python-version }}" \
             --data package_slug="mcfly"
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 24
-
-      - name: Install @devcontainers/cli
-        run: npm install --location=global @devcontainers/cli@0.54.2
-
-      - name: Start Dev Container
+      - name: Prepare package
         working-directory: generated
-        env:
-          DOCKER_BUILDKIT: 1
-          COMPOSE_BAKE: "false"
         run: |
           git init
           git add .
           uv lock
-          devcontainer up --workspace-folder .
 
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      # Build the dev stage of the generated Dockerfile, cached in the GitHub Actions cache.
+      # https://github.com/docker/build-push-action
+      - name: Build image
+        uses: docker/build-push-action@v7
+        with:
+          context: generated
+          target: dev
+          tags: mcfly-dev
+          load: true
+          build-args: PYTHON_VERSION=${{ matrix.python-version }}
+          cache-from: type=gha,scope=package-${{ matrix.python-version }}
+          cache-to: type=gha,mode=max,scope=package-${{ matrix.python-version }}
+
+      # Mount the generated package over the workdir: lint needs .git.
       - name: Lint package
         working-directory: generated
-        run: devcontainer exec --workspace-folder . poe lint
+        run: docker run --rm -v "$PWD:/workspaces/mcfly" mcfly-dev poe lint
 
       - name: Test package
         working-directory: generated
-        run: devcontainer exec --workspace-folder . poe test
+        run: docker run --rm -v "$PWD:/workspaces/mcfly" mcfly-dev poe test
 
   generate_fastapi:
     runs-on: ubuntu-latest
@@ -124,29 +130,35 @@ jobs:
             --data python_version="${{ matrix.python-version }}" \
             --data package_slug="mcfly"
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 24
-
-      - name: Install @devcontainers/cli
-        run: npm install --location=global @devcontainers/cli@0.54.2
-
-      - name: Start Dev Container
+      - name: Prepare package
         working-directory: generated
-        env:
-          DOCKER_BUILDKIT: 1
-          COMPOSE_BAKE: "false"
         run: |
           git init
           git add .
           uv lock
-          devcontainer up --workspace-folder .
 
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      # Build the dev stage of the generated Dockerfile, cached in the GitHub Actions cache.
+      # https://github.com/docker/build-push-action
+      - name: Build image
+        uses: docker/build-push-action@v7
+        with:
+          context: generated
+          target: dev
+          tags: mcfly-dev
+          load: true
+          build-args: PYTHON_VERSION=${{ matrix.python-version }}
+          cache-from: type=gha,scope=fastapi-${{ matrix.python-version }}
+          cache-to: type=gha,mode=max,scope=fastapi-${{ matrix.python-version }}
+
+      # Mount the generated package over the workdir: lint needs .git.
       - name: Lint package
         working-directory: generated
-        run: devcontainer exec --workspace-folder . poe lint
+        run: docker run --rm -v "$PWD:/workspaces/mcfly" mcfly-dev poe lint
 
       - name: Test package
         working-directory: generated
-        run: devcontainer exec --workspace-folder . poe test
+        run: docker run --rm -v "$PWD:/workspaces/mcfly" mcfly-dev poe test
