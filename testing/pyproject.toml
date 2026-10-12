@@ -12,8 +12,8 @@ dependencies = [
     "pre-commit>=4.1.0",
     "pytest>=9.1.1",
     "pyyaml>=6.0.3",
-    "ruff>=0.16.7",
-    "ty>=0.0.80",
+    "ruff>=0.17.0",
+    "ty>=0.0.86",
 ]
 
 [tool.ruff]  # https://github.com/charliermarsh/ruff
