@@ -24,6 +24,8 @@ jobs:
     name: Python {% raw %}${{ matrix.python-version }}{% endraw %}
     env:
       BRANCH: {% raw %}${{ github.head_ref || github.ref_name }}{% endraw %}
+      # Docker Compose builds via buildx bake by default, which refuses the Dockerfile the devcontainers CLI writes outside the build context.
+      COMPOSE_BAKE: "false"
     steps:
       # https://github.com/actions/checkout
       - name: Checkout
