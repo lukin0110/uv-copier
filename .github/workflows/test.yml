@@ -77,6 +77,7 @@ jobs:
         working-directory: generated
         env:
           DOCKER_BUILDKIT: 1
+          COMPOSE_BAKE: "false"
         run: |
           git init
           git add .
@@ -135,6 +136,7 @@ jobs:
         working-directory: generated
         env:
           DOCKER_BUILDKIT: 1
+          COMPOSE_BAKE: "false"
         run: |
           git init
           git add .
