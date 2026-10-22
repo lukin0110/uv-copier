@@ -92,13 +92,13 @@ repository_url:
 python_version:
     type: str
     help: What Python version do you want to use?
-    default: "3.14.3"
+    default: "3.14.9"
     when: false
 
 uv_version:
     type: str
     help: What uv version do you want to use?
-    default: "0.12.6"
+    default: "0.13.5"
     when: false
 
 # The validator of the `name` field ensures that the name only contains alphanumeric characters and single spaces.
