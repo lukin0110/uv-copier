@@ -14,7 +14,7 @@ def answers() -> dict[str, str | bool]:
         "use_makefile": False,
         "use_claude": False,
         "use_private_package_repository": False,
-        "python_version": "3.14.3",
+        "python_version": "3.14.9",
         "package_slug": "mcfly",
         "use_app": False,
         "use_fastapi": False,

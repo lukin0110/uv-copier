@@ -62,7 +62,7 @@ The template aims to strike a balance between Docker-based and non-Docker-based 
 1. Install [pyenv](https://github.com/pyenv/pyenv?tab=readme-ov-file#installation)
 2. Activate pyenv: 
 ```bash 
-pyenv shell 3.14.3
+pyenv shell 3.14.9
 ```
 3. Install uv: 
 ```bash 
